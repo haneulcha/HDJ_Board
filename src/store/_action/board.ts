@@ -1,4 +1,4 @@
-import { Board, BoardActionTypes, CREATE_BOARD, DELETE_BOARD} from './types'
+import { Board, BoardActionTypes, CREATE_BOARD, DELETE_BOARD} from '../_type/board'
 
 export function createBoard(newBoard: Board): BoardActionTypes {
     return {

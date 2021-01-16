@@ -8,12 +8,15 @@ declare const window: Window & { devToolsExtension: any, __REDUX_DEVTOOLS_EXTENS
 
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from "redux-thunk"
+import createSagaMiddleware from 'redux-saga'
 import { rootReducer } from './store';
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)))
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(rootReducer,composeEnhancers(applyMiddleware(sagaMiddleware)))
+
+// sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <React.StrictMode>

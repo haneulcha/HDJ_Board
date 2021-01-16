@@ -1,4 +1,4 @@
-import { CREATE_POST, DELETE_POST, PostActionTypes, PostsState } from './types'
+import { CREATE_POST, DELETE_POST, PostActionTypes, PostsState } from '../_type/post'
 
 const initialState: PostsState = {
     posts: []

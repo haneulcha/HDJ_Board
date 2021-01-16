@@ -1,5 +1,5 @@
 
-import {  CREATE_BOARD, DELETE_BOARD, BoardsState, BoardActionTypes } from './types'
+import {  CREATE_BOARD, DELETE_BOARD, BoardsState, BoardActionTypes } from '../_type/board'
 
 const initialState: BoardsState = {
     boards: []
