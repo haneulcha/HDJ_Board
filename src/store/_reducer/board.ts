@@ -2,7 +2,23 @@
 import {  CREATE_BOARD, DELETE_BOARD, BoardsState, BoardActionTypes } from '../_type/board'
 
 const initialState: BoardsState = {
-    boards: []
+    boards: [
+        // {            
+        //     index: 0,
+        //     name: "업무",
+        //     timestamp: 1610809075
+        // },
+        // {            
+        //     index: 1,
+        //     name: "읽을 책",
+        //     timestamp: 1610809216
+        // },
+        // {            
+        //     index: 2,
+        //     name: "아이디어",
+        //     timestamp: 1610809217
+        // }
+    ]
 }
 
 export function boardReducer(

@@ -1,11 +1,23 @@
-import { Board, BoardActionTypes, CREATE_BOARD, DELETE_BOARD} from '../_type/board'
+import { BoardActionTypes } from '../_type/board'
 
-export function createBoard(newBoard: Board): BoardActionTypes {
+export const REQUEST_BOARD = 'REQUEST_BOARD'
+export const CREATE_BOARD = 'CREATE_BOARD'
+export const DELETE_BOARD = 'DELETE_BOARD'
+export const CREATE_POST = 'CREATE_POST'
+export const DELETE_POST = 'DELETE_POST'
+
+export function requestBoard(): BoardActionTypes {
     return {
-        type: CREATE_BOARD,
-        payload: newBoard
+        type: REQUEST_BOARD
     }
 }
+
+// export function createBoard(newBoard: Board): BoardActionTypes {
+//     return {
+//         type: CREATE_BOARD,
+//         payload: newBoard
+//     }
+// }
 
 export function deleteBoard(timestamp: number): BoardActionTypes {
     return {

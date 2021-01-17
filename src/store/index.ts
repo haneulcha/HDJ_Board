@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { boardReducer } from './board/reducers'
-import { postReducer } from './post/reducers'
+import { boardReducer } from './_reducer/board'
+import { postReducer } from './_reducer/post'
 
 export const rootReducer = combineReducers({
     board: boardReducer,
