@@ -1,6 +1,6 @@
 import { all, call, fork, put, StrictEffect, takeEvery } from 'redux-saga/effects';
 import * as actions from '../_type/board'
-import { createBoardLS, BoardLS, getBoardListLS } from '../../utils'
+import { createBoardLS, BoardLS, getBoardListLS, deleteBoardLS } from '../../utils'
 
 function* getBoardList() {
     const boardListLS: Array<BoardLS> = yield call(getBoardListLS)
@@ -29,9 +29,22 @@ function* createBoard(){
     })
 }
 
+function* deleteBoard(action: actions.ReqDeleteBoardAction){    
+    const deleteLS: boolean = yield call(deleteBoardLS, action.meta.timestamp)    
+    if(deleteLS){
+        yield put({
+            type: actions.DELETE_BOARD,                
+            meta: {
+                timestamp: action.meta.timestamp
+            }
+        })
+    }
+}
+
 
 function* watchBoard() {
     yield takeEvery(actions.REQUEST_BOARD, createBoard);
+    yield takeEvery(actions.REQ_DELETE_BOARD, deleteBoard)
 }
 
 function* watchBoardList() {

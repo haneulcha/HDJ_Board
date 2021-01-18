@@ -2,6 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestBoard } from '../../store/_action/board';
 import { IrootState } from '../../store/_type';
+import { Board } from '../../store/_type/board';
+import List from './list'
 
 
 function BoardList ():React.ReactElement {
@@ -13,14 +15,19 @@ function BoardList ():React.ReactElement {
         // onclick => 새 board 객체 추가
         // localstorage, 리덕스, 
   
-    const handleAddList = () => {        
+    const handleAddBoard = () => {        
         dispatch(requestBoard())
     } 
 
     return(
         <section className="board-list">
+            <ul>
+                {boardLists.map((board:Board, i:number) => 
+                    <List key={i} board={board} />                
+                )}
+            </ul>
             보드 리스트
-            <button onClick={handleAddList}>📋</button>
+            <button onClick={handleAddBoard}>📋</button>
         </section>
     )
 }

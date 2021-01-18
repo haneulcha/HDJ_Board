@@ -1,3 +1,6 @@
+import { time } from "console";
+import { parse } from "path";
+
 const KEY_BOARDS = "Boards"
 const KEY_IS_ON = "isOn"
 
@@ -25,7 +28,7 @@ function exist(): boolean {
 }
 
 export function createBoardLS(): BoardLS {
-    const getNewTimeStamp = ():number => Math.round(new Date().getTime() / 1000)
+    const getNewTimeStamp = ():number => Math.round(new Date().getTime() / 100)
  
     const existingBoards = localStorage.getItem(KEY_BOARDS) || "[]";
     const parsedBoards:Array<BoardLS> = JSON.parse(existingBoards);
@@ -41,14 +44,15 @@ export function createBoardLS(): BoardLS {
 }
 
 export function deleteBoardLS(timestamp: number): boolean {
-
+    
     const existingBoards = localStorage.getItem(KEY_BOARDS);
     if(!existingBoards){
         return false
     }
     const parsedBoards: BoardLS[] = JSON.parse(existingBoards);
-    parsedBoards.filter( board => board.timestamp !== timestamp )
-    localStorage.setItem(KEY_BOARDS, JSON.stringify(parsedBoards));
+    const filteredBoards = parsedBoards.filter( board => +board.timestamp !== timestamp )
+    localStorage.setItem(KEY_BOARDS, JSON.stringify(filteredBoards));
+    
     return true
 }
 
