@@ -1,10 +1,20 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestBoard } from '../../store/_action/board';
-import { IrootState } from '../../store/_type';
-import { Board } from '../../store/_type/board';
 import List from './list'
+import { IBoard, IPost } from '../../store/_type'
 
+export interface IrootState {
+    board: {
+        boards: Array<IBoard>
+    }
+    post: {
+        posts: Array<IPost>
+    }
+    isOn: {
+        isOn: number
+    }
+}
 
 function BoardList ():React.ReactElement {
     const dispatch = useDispatch()
@@ -22,7 +32,7 @@ function BoardList ():React.ReactElement {
     return(
         <section className="board-list">
             <ul>
-                {boardLists.map((board:Board, i:number) => 
+                {boardLists.map((board:IBoard, i:number) => 
                     <List key={i} board={board} />                
                 )}
             </ul>

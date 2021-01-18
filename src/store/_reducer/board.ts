@@ -1,13 +1,13 @@
-import {  CREATE_BOARD, DELETE_BOARD, GET_BOARDLIST, BoardsState, BoardActionTypes, BoardListActionTypes } from '../_type/board'
+import {  CREATE_BOARD, DELETE_BOARD, GET_BOARDLIST, IBoardsState, BoardActionTypes, BoardListActionTypes } from '../_type/board'
 
-const initialState: BoardsState = {
+const initialState: IBoardsState = {
     boards: []
 }
 
 export function boardReducer(
     state = initialState,
     action: BoardActionTypes | BoardListActionTypes
-): BoardsState {    
+): IBoardsState {    
     switch (action.type){
         
         case CREATE_BOARD:

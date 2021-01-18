@@ -1,8 +1,9 @@
-import { time } from "console";
-import { parse } from "path";
-
 const KEY_BOARDS = "Boards"
 const KEY_IS_ON = "isOn"
+
+export interface IsOnLS {
+    isOn: number
+}
 
 interface PostLS {
     id: string
@@ -21,10 +22,25 @@ export interface BoardLS {
     posts: Array<PostLS>
 }
 
-function exist(): boolean {
-    const existingBoards = localStorage.getItem(KEY_BOARDS);
+function exist(key: string): boolean {
+    const existingBoards = localStorage.getItem(key);
     if(existingBoards) return true
     else return false
+}
+
+// 이미 생성된 보드를 클릭할 때만 호출
+export function updateIsOn(timestamp:number):void {
+    const isOn = {
+        isOn: timestamp
+    }
+    localStorage.setItem(KEY_IS_ON, JSON.stringify(isOn)); 
+}
+
+// 보드를 생성 및 삭제할 때 호출
+export function getIsOnLS():IsOnLS {    
+    const isOn = localStorage.getItem(KEY_IS_ON) || "{}";
+    const parsedIsOn:IsOnLS = JSON.parse(isOn);
+    return parsedIsOn
 }
 
 export function createBoardLS(): BoardLS {
@@ -39,7 +55,8 @@ export function createBoardLS(): BoardLS {
         posts : []
     }       
     localStorage.setItem(KEY_BOARDS, JSON.stringify([...parsedBoards, board])); 
-        
+    updateIsOn(board.timestamp)
+
     return board
 }
 
@@ -50,15 +67,18 @@ export function deleteBoardLS(timestamp: number): boolean {
         return false
     }
     const parsedBoards: BoardLS[] = JSON.parse(existingBoards);
-    const filteredBoards = parsedBoards.filter( board => +board.timestamp !== timestamp )
+    const filteredBoards: BoardLS[] = parsedBoards.filter( board => +board.timestamp !== timestamp )
     localStorage.setItem(KEY_BOARDS, JSON.stringify(filteredBoards));
-    
+
+    // isOn을 마지막 보드로 이동
+    const lastBoardTimestamp = filteredBoards[filteredBoards.length - 1].timestamp
+    updateIsOn(lastBoardTimestamp)
     return true
 }
 
 export function getBoardListLS(): Array<BoardLS> {
     
-    if(!exist()){ // 첫 접속일 경우
+    if(!exist(KEY_BOARDS)){ // 첫 접속일 경우
         createBoardLS()        
     } 
     const boards = localStorage.getItem(KEY_BOARDS) || "[]";

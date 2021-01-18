@@ -1,7 +1,7 @@
 export const CREATE_POST = 'CREATE_POST'
 export const DELETE_POST = 'DELETE_POST'
 
-export interface Post {
+export interface IPost {
     id: string
     title: string
     content: string
@@ -13,16 +13,16 @@ export interface Post {
     timestamp: number
 }
 
-export interface PostsState {
-    posts: Post[]
+export interface IPostsState {
+    posts: Array<IPost>
 }
 
-interface CreatePostAction {
+interface ICreatePostAction {
     type: typeof CREATE_POST
-    payload: Post
+    payload: IPost
 }
 
-interface DeletePostAction {
+interface IDeletePostAction {
     type: typeof DELETE_POST
     meta: {
         boardId: string
@@ -30,4 +30,4 @@ interface DeletePostAction {
     }
 }
 
-export type PostActionTypes = CreatePostAction | DeletePostAction
+export type PostActionTypes = ICreatePostAction | IDeletePostAction

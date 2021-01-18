@@ -7,36 +7,33 @@ export const CREATE_BOARD = 'CREATE_BOARD'
 export const REQ_DELETE_BOARD = 'REQ_DELETE_BOARD'
 export const DELETE_BOARD = 'DELETE_BOARD'
 
-export const CREATE_POST = 'CREATE_POST'
-export const DELETE_POST = 'DELETE_POST'
-
-export interface Board {
+export interface IBoard {
     index: number
     name: string    
     timestamp: number
 }
 
-export interface BoardsState {
-    boards: Board[]
+export interface IBoardsState {
+    boards: IBoard[]
 }
 
-interface RequestBoardAction {
+interface IRequestBoardAction {
     type: typeof REQUEST_BOARD
 }
 
-interface CreateBoardAction {
+interface ICreateBoardAction {
     type: typeof CREATE_BOARD
-    payload: Board
+    payload: IBoard
 }
 
-export interface ReqDeleteBoardAction {
+export interface IReqDeleteBoardAction {
     type: typeof REQ_DELETE_BOARD
     meta: {
         timestamp: number
     }
 }
 
-interface DeleteBoardAction {
+interface IDeleteBoardAction {
     type: typeof DELETE_BOARD
     meta: {
         timestamp: number
@@ -44,16 +41,16 @@ interface DeleteBoardAction {
 }
 
 
-interface RequestBoardListAction {
+interface IRequestBoardListAction {
     type: typeof REQUEST_BOARDLIST
 }
 
-interface GetBoardListAction {
+interface IGetBoardListAction {
     type: typeof GET_BOARDLIST
-    payload: Array<Board>
+    payload: Array<IBoard>
 }
 
 
-export type BoardListActionTypes = RequestBoardListAction | GetBoardListAction
-export type BoardActionTypes = RequestBoardAction | CreateBoardAction | DeleteBoardAction
+export type BoardListActionTypes = IRequestBoardListAction | IGetBoardListAction
+export type BoardActionTypes = IRequestBoardAction | ICreateBoardAction | IDeleteBoardAction
 

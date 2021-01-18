@@ -1,13 +1,13 @@
-import { CREATE_POST, DELETE_POST, PostActionTypes, PostsState } from '../_type/post'
+import { CREATE_POST, DELETE_POST, PostActionTypes, IPostsState } from '../_type/post'
 
-const initialState: PostsState = {
+const initialState: IPostsState = {
     posts: []
 }
 
 export function postReducer(
     state = initialState,
     action: PostActionTypes
-): PostsState {
+): IPostsState {
     switch (action.type){
         case CREATE_POST:
             return {
