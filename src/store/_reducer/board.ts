@@ -1,29 +1,13 @@
 
-import {  CREATE_BOARD, DELETE_BOARD, BoardsState, BoardActionTypes } from '../_type/board'
+import {  CREATE_BOARD, DELETE_BOARD, BoardsState, BoardActionTypes, GET_BOARDLIST, BoardListActionTypes } from '../_type/board'
 
 const initialState: BoardsState = {
-    boards: [
-        // {            
-        //     index: 0,
-        //     name: "업무",
-        //     timestamp: 1610809075
-        // },
-        // {            
-        //     index: 1,
-        //     name: "읽을 책",
-        //     timestamp: 1610809216
-        // },
-        // {            
-        //     index: 2,
-        //     name: "아이디어",
-        //     timestamp: 1610809217
-        // }
-    ]
+    boards: []
 }
 
 export function boardReducer(
     state = initialState,
-    action: BoardActionTypes
+    action: BoardActionTypes | BoardListActionTypes
 ): BoardsState {    
     switch (action.type){
         
@@ -36,6 +20,10 @@ export function boardReducer(
                 boards: state.boards.filter(
                     board => board.timestamp !== action.meta.timestamp
                 )
+            }
+        case GET_BOARDLIST:
+            return {
+                boards: action.payload
             }
         // case CREATE_POST:
             

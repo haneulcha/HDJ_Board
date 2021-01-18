@@ -6,8 +6,7 @@ function Board ():ReactElement {
 
     return(
         <section className="board">
-            보드
-            
+            보드            
         </section>
     )
 }

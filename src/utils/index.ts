@@ -1,4 +1,5 @@
-const KEY = "HDJ_BOARDS"
+const KEY_BOARDS = "Boards"
+const KEY_IS_ON = "isOn"
 
 interface PostLS {
     id: string
@@ -17,43 +18,47 @@ export interface BoardLS {
     posts: Array<PostLS>
 }
 
+function exist(): boolean {
+    const existingBoards = localStorage.getItem(KEY_BOARDS);
+    if(existingBoards) return true
+    else return false
+}
+
 export function createBoardLS(): BoardLS {
     const getNewTimeStamp = ():number => Math.round(new Date().getTime() / 1000)
-   
-    const existingBoards = localStorage.getItem(KEY);
-
-    if (!existingBoards) {
-        const board: BoardLS = {
-            index: 1,
-            name: "새 보드",
-            timestamp: getNewTimeStamp(),
-            posts : []
-        }
-        localStorage.setItem(KEY, JSON.stringify([board]));
-        return board    
-    }
-         
+ 
+    const existingBoards = localStorage.getItem(KEY_BOARDS) || "[]";
     const parsedBoards:Array<BoardLS> = JSON.parse(existingBoards);
     const board: BoardLS = {
         index: parsedBoards.length + 1,
         name: "새 보드",
         timestamp: getNewTimeStamp(),
         posts : []
-    }
-    parsedBoards.push(board)
-    localStorage.setItem(KEY, JSON.stringify(parsedBoards)); 
-    
+    }       
+    localStorage.setItem(KEY_BOARDS, JSON.stringify([...parsedBoards, board])); 
+        
     return board
 }
 
 export function deleteBoardLS(timestamp: number): boolean {
 
-    const existingBoards = localStorage.getItem(KEY);
+    const existingBoards = localStorage.getItem(KEY_BOARDS);
     if(!existingBoards){
         return false
     }
     const parsedBoards: BoardLS[] = JSON.parse(existingBoards);
     parsedBoards.filter( board => board.timestamp !== timestamp )
-    localStorage.setItem(KEY, JSON.stringify(parsedBoards));
+    localStorage.setItem(KEY_BOARDS, JSON.stringify(parsedBoards));
     return true
+}
+
+export function getBoardListLS(): Array<BoardLS> {
+    
+    if(!exist()){ // 첫 접속일 경우
+        createBoardLS()        
+    } 
+    const boards = localStorage.getItem(KEY_BOARDS) || "[]";
+    const parsedBoards:Array<BoardLS> = JSON.parse(boards) ;
+
+    return parsedBoards
 }
