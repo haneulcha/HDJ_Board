@@ -1,12 +1,11 @@
-import { GET_ISON, IsOnActionTypes, IsOnState } from "../_type";
+import { GET_ISON, IsOnActionTypes, IIsOnState } from "../_type";
 
 export function isOnReducer(
     state = {
         isOn : 0
     },
     action: IsOnActionTypes
-): IsOnState {
-    console.log('inreducer', action)
+): IIsOnState {    
     switch (action.type) {        
         case GET_ISON:
             return {

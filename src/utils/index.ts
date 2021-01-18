@@ -29,7 +29,7 @@ function exist(key: string): boolean {
 }
 
 // 이미 생성된 보드를 클릭할 때만 호출
-export function updateIsOn(timestamp:number):void {
+export function updateIsOnLS(timestamp:number):void {
     const isOn = {
         isOn: timestamp
     }
@@ -55,7 +55,7 @@ export function createBoardLS(): BoardLS {
         posts : []
     }       
     localStorage.setItem(KEY_BOARDS, JSON.stringify([...parsedBoards, board])); 
-    updateIsOn(board.timestamp)
+    updateIsOnLS(board.timestamp)
 
     return board
 }
@@ -72,7 +72,7 @@ export function deleteBoardLS(timestamp: number): boolean {
 
     // isOn을 마지막 보드로 이동
     const lastBoardTimestamp = filteredBoards[filteredBoards.length - 1].timestamp
-    updateIsOn(lastBoardTimestamp)
+    updateIsOnLS(lastBoardTimestamp)
     return true
 }
 
