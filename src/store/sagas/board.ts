@@ -1,9 +1,9 @@
 import { all, call, fork, put, StrictEffect, takeEvery } from 'redux-saga/effects';
 import * as actions from '../_type'
-import { createBoardLS, BoardLS, getBoardListLS, deleteBoardLS, getIsOnLS, IsOnLS } from '../../utils'
+import { createBoardLS, IBoardLS, getBoardListLS, deleteBoardLS, getIsOnLS, IIsOnLS } from '../../utils'
 
 function* getBoardList() {
-    const boardListLS: Array<BoardLS> = yield call(getBoardListLS)
+    const boardListLS: Array<IBoardLS> = yield call(getBoardListLS)
     const boardListRD: Array<actions.IBoard> = boardListLS.map(
         (board:actions.IBoard) => ({ 
             index: board.index,
@@ -17,7 +17,7 @@ function* getBoardList() {
     
 }
 function* createBoard(){
-    const boardLS: BoardLS = yield call(createBoardLS)
+    const boardLS: IBoardLS = yield call(createBoardLS)
     const boardRD: actions.IBoard = {
         index: boardLS.index,
         name: boardLS.name,
@@ -28,7 +28,7 @@ function* createBoard(){
         payload: boardRD
     })
 
-    const isOn: IsOnLS = yield call(getIsOnLS)
+    const isOn: IIsOnLS = yield call(getIsOnLS)
     yield put({
         type: actions.GET_ISON,
         payload: isOn
@@ -46,7 +46,7 @@ function* deleteBoard(action: actions.IReqDeleteBoardAction){
             }
         })
 
-        const isOn: IsOnLS = yield call(getIsOnLS)
+        const isOn: IIsOnLS = yield call(getIsOnLS)
         yield put({
         type: actions.GET_ISON,
         payload: isOn
@@ -56,12 +56,12 @@ function* deleteBoard(action: actions.IReqDeleteBoardAction){
 
 
 function* watchBoard() {
-    yield takeEvery(actions.REQUEST_BOARD, createBoard);
+    yield takeEvery(actions.REQ_CREATE_BOARD, createBoard);
     yield takeEvery(actions.REQ_DELETE_BOARD, deleteBoard)
 }
 
 function* watchBoardList() {
-    yield takeEvery(actions.REQUEST_BOARDLIST, getBoardList)
+    yield takeEvery(actions.REQ_GET_BOARDLIST, getBoardList)
 }
 
 

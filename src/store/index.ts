@@ -1,7 +1,5 @@
 import { combineReducers } from 'redux'
-import { boardReducer } from './_reducer/board'
-import { postReducer } from './_reducer/post'
-import { isOnReducer } from './_reducer/isOn'
+import { boardReducer, postReducer, isOnReducer } from './_reducer'
 
 export const rootReducer = combineReducers({
     board: boardReducer,

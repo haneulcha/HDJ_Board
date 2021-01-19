@@ -1,14 +1,14 @@
-import { REQUEST_BOARD, REQUEST_BOARDLIST, REQ_DELETE_BOARD, BoardActionTypes, BoardListActionTypes, IReqDeleteBoardAction  } from '../_type'
+import { REQ_CREATE_BOARD, REQ_GET_BOARDLIST, REQ_DELETE_BOARD, BoardActionTypes, BoardListActionTypes, IReqDeleteBoardAction  } from '../_type'
 
-export function requestBoard(): BoardActionTypes {
+export function reqCreateBoard(): BoardActionTypes {
     return {
-        type: REQUEST_BOARD
+        type: REQ_CREATE_BOARD
     }
 }
 
-export function requestBoardList(): BoardListActionTypes {
+export function reqGetBoardList(): BoardListActionTypes {
     return {
-        type: REQUEST_BOARDLIST
+        type: REQ_GET_BOARDLIST
     }
 }
 

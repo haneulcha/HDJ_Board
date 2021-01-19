@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import './App.css';
 import Board from './components/Board';
 import BoardList from './components/BoardList';
-import { requestBoardList } from './store/_action/board';
+import { reqGetBoardList } from './store/_action/board';
 import { reqGetIsOn } from './store/_action/isOn';
 
 
@@ -12,7 +12,7 @@ function App():ReactElement {
   const dispatch = useDispatch()
 
   useEffect(() => {   
-    dispatch(requestBoardList())
+    dispatch(reqGetBoardList())
     dispatch(reqGetIsOn()) 
     }, 
     []

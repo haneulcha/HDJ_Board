@@ -1,7 +1,7 @@
-export const REQUEST_BOARDLIST = 'REQUEST_BOARDLIST'
+export const REQ_GET_BOARDLIST = 'REQ_GET_BOARDLIST'
 export const GET_BOARDLIST = 'GET_BOARDLIST'
 
-export const REQUEST_BOARD = 'REQUEST_BOARD'
+export const REQ_CREATE_BOARD = 'REQ_CREATE_BOARD'
 export const CREATE_BOARD = 'CREATE_BOARD'
 
 export const REQ_DELETE_BOARD = 'REQ_DELETE_BOARD'
@@ -17,8 +17,8 @@ export interface IBoardsState {
     boards: IBoard[]
 }
 
-interface IRequestBoardAction {
-    type: typeof REQUEST_BOARD
+interface IReqCreateBoardAction {
+    type: typeof REQ_CREATE_BOARD
 }
 
 interface ICreateBoardAction {
@@ -41,8 +41,8 @@ interface IDeleteBoardAction {
 }
 
 
-interface IRequestBoardListAction {
-    type: typeof REQUEST_BOARDLIST
+interface IReqGetBoardListAction {
+    type: typeof REQ_GET_BOARDLIST
 }
 
 interface IGetBoardListAction {
@@ -51,6 +51,6 @@ interface IGetBoardListAction {
 }
 
 
-export type BoardListActionTypes = IRequestBoardListAction | IGetBoardListAction
-export type BoardActionTypes = IRequestBoardAction | ICreateBoardAction | IDeleteBoardAction
+export type BoardListActionTypes = IReqGetBoardListAction | IGetBoardListAction
+export type BoardActionTypes = IReqCreateBoardAction | ICreateBoardAction | IDeleteBoardAction
 

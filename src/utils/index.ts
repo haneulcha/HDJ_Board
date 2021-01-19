@@ -1,11 +1,11 @@
 const KEY_BOARDS = "Boards"
 const KEY_IS_ON = "isOn"
 
-export interface IsOnLS {
+export interface IIsOnLS {
     isOn: number
 }
 
-interface PostLS {
+interface IPostLS {
     id: string
     title: string
     content: string
@@ -15,11 +15,11 @@ interface PostLS {
     timestamp: number
 }
 
-export interface BoardLS {
+export interface IBoardLS {
     index: number,
     name: string,
     timestamp: number,
-    posts: Array<PostLS>
+    posts: Array<IPostLS>
 }
 
 function exist(key: string): boolean {
@@ -37,18 +37,18 @@ export function updateIsOnLS(timestamp:number):void {
 }
 
 // 보드를 생성 및 삭제할 때 호출
-export function getIsOnLS():IsOnLS {    
+export function getIsOnLS():IIsOnLS {    
     const isOn = localStorage.getItem(KEY_IS_ON) || "{}";
-    const parsedIsOn:IsOnLS = JSON.parse(isOn);
+    const parsedIsOn:IIsOnLS = JSON.parse(isOn);
     return parsedIsOn
 }
 
-export function createBoardLS(): BoardLS {
+export function createBoardLS(): IBoardLS {
     const getNewTimeStamp = ():number => Math.round(new Date().getTime() / 100)
  
     const existingBoards = localStorage.getItem(KEY_BOARDS) || "[]";
-    const parsedBoards:Array<BoardLS> = JSON.parse(existingBoards);
-    const board: BoardLS = {
+    const parsedBoards:Array<IBoardLS> = JSON.parse(existingBoards);
+    const board: IBoardLS = {
         index: parsedBoards.length + 1,
         name: "새 보드",
         timestamp: getNewTimeStamp(),
@@ -66,8 +66,8 @@ export function deleteBoardLS(timestamp: number): boolean {
     if(!existingBoards){
         return false
     }
-    const parsedBoards: BoardLS[] = JSON.parse(existingBoards);
-    const filteredBoards: BoardLS[] = parsedBoards.filter( board => +board.timestamp !== timestamp )
+    const parsedBoards: IBoardLS[] = JSON.parse(existingBoards);
+    const filteredBoards: IBoardLS[] = parsedBoards.filter( board => +board.timestamp !== timestamp )
     localStorage.setItem(KEY_BOARDS, JSON.stringify(filteredBoards));
 
     // isOn을 마지막 보드로 이동
@@ -76,13 +76,13 @@ export function deleteBoardLS(timestamp: number): boolean {
     return true
 }
 
-export function getBoardListLS(): Array<BoardLS> {
+export function getBoardListLS(): Array<IBoardLS> {
     
     if(!exist(KEY_BOARDS)){ // 첫 접속일 경우
         createBoardLS()        
     } 
     const boards = localStorage.getItem(KEY_BOARDS) || "[]";
-    const parsedBoards:Array<BoardLS> = JSON.parse(boards) ;
+    const parsedBoards:Array<IBoardLS> = JSON.parse(boards) ;
 
     return parsedBoards
 }

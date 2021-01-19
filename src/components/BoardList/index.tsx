@@ -1,20 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestBoard } from '../../store/_action/board';
+import { IrootState, IBoard } from '../../store/_type'
+import { reqCreateBoard } from '../../store/_action/board';
 import List from './list'
-import { IBoard, IPost } from '../../store/_type'
 
-export interface IrootState {
-    board: {
-        boards: Array<IBoard>
-    }
-    post: {
-        posts: Array<IPost>
-    }
-    isOn: {
-        isOn: number
-    }
-}
 
 function BoardList ():React.ReactElement {
     const dispatch = useDispatch()
@@ -26,7 +15,7 @@ function BoardList ():React.ReactElement {
         // localstorage, 리덕스, 
   
     const handleAddBoard = () => {        
-        dispatch(requestBoard())
+        dispatch(reqCreateBoard())
     } 
 
     return(
