@@ -5,6 +5,7 @@ import {
     PostActionTypes,
     IPostsState,
     ReqPostActionTypes,
+    UPDATE_POST,
 } from "../_type";
 
 const initialState: IPostsState = {
@@ -24,6 +25,14 @@ export function postReducer(
             return {
                 posts: state.posts.filter(
                     (post) => post.timestamp !== action.meta.timestamp
+                ),
+            };
+        case UPDATE_POST:
+            return {
+                posts: state.posts.map((post) =>
+                    post.timestamp === action.payload.timestamp
+                        ? action.payload
+                        : post
                 ),
             };
         case GET_POSTS:

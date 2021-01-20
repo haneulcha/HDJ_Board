@@ -4,6 +4,9 @@ export const GET_POSTS = "GET_POSTS";
 export const REQ_CREATE_POST = "REQ_CREATE_POST";
 export const CREATE_POST = "CREATE_POST";
 
+export const REQ_UPDATE_POST = "REQ_UPDATE_POST";
+export const UPDATE_POST = "UPDATE_POST";
+
 export const REQ_DELETE_POST = "REQ_DELETE_POST";
 export const DELETE_POST = "DELETE_POST";
 
@@ -42,6 +45,16 @@ interface IDeletePostAction {
     };
 }
 
+export interface IReqUpdatePostAction {
+    type: typeof REQ_UPDATE_POST;
+    payload: IPost;
+}
+
+export interface ReqUpdatePostAction {
+    type: typeof UPDATE_POST;
+    payload: IPost;
+}
+
 export interface IReqGetPostsAction {
     type: typeof REQ_GET_POSTS;
 }
@@ -56,8 +69,10 @@ export type CreatePostActionTypes = IReqCreatePostActions | ICreatePostAction;
 export type ReqPostActionTypes =
     | IReqCreatePostActions
     | IReqDeletePostAction
-    | IReqGetPostsAction;
+    | IReqGetPostsAction
+    | IReqUpdatePostAction;
 export type PostActionTypes =
     | ICreatePostAction
     | IDeletePostAction
-    | IGetPostsAction;
+    | IGetPostsAction
+    | ReqUpdatePostAction;

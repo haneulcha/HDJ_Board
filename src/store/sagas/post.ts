@@ -8,7 +8,7 @@ import {
     takeEvery,
 } from "redux-saga/effects";
 import * as actions from "../_type";
-import { createPostLS, getPostsLS, IPostLS } from "../../utils";
+import { createPostLS, getPostsLS, IPostLS, updatePostLS } from "../../utils";
 
 export const getIsOn = (state: actions.IrootState): actions.IIsOnState =>
     state.isOn;
@@ -30,6 +30,14 @@ function* createPost(action: actions.CreatePostActionTypes) {
     });
 }
 
+function* updatePost(action: actions.IReqUpdatePostAction) {
+    yield updatePostLS(action.payload);
+    yield put({
+        type: actions.UPDATE_POST,
+        payload: action.payload,
+    });
+}
+
 function* watchGetPost() {
     // yield takeEvery(actions.REQ_GET_POSTS, getPosts); // 최초 접속시 불러오기
     yield takeEvery(actions.GET_ISON, getPosts); // isOn이 변경될 때마다 새로 포스트 불러오기
@@ -40,6 +48,14 @@ function* watchCreatePost() {
     yield takeEvery(actions.REQ_CREATE_POST, createPost);
 }
 
+function* watchUpdatePost() {
+    yield takeEvery(actions.REQ_UPDATE_POST, updatePost);
+}
+
 export default function* PostSaga(): Generator<StrictEffect, void, unknown> {
-    yield all([fork(watchGetPost), fork(watchCreatePost)]);
+    yield all([
+        fork(watchGetPost),
+        fork(watchCreatePost),
+        fork(watchUpdatePost),
+    ]);
 }

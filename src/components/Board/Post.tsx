@@ -1,15 +1,22 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { Formik, Field, Form } from "formik";
 import { IPost } from "../../store/_type";
+import { reqUpdatePost } from "../../store/_action/post";
 
 interface PostProps {
     post: IPost;
 }
 export default function Post({ post }: PostProps): ReactElement {
-    const [editable, setEditable] = useState(false);
+    const dispatch = useDispatch();
+    const [editable, setEditable] = useState({ title: false, content: false });
+    const postRef = useRef<HTMLDivElement>(null); // TODO: 필요없을지도
 
-    // function handleBlur(e: React.MouseEvent):void {
+    // function onClickOutSide():void {
 
+    //     if (postRef.current) {
+    //         setEditable({ title: false, content: false }); // Disable text input
+    //     }
     // }
 
     const postStyle = {
@@ -19,46 +26,91 @@ export default function Post({ post }: PostProps): ReactElement {
         height: post.size.height,
     };
 
+    // useEffect(() => {
+    //     if (editable.title || editable.content) {
+    //         document.addEventListener("mousedown", onClickOutSide);
+    //     }
+    //     return () => {
+    //         document.removeEventListener("mousedown", onClickOutSide);
+    //     };
+    // });
+
     return (
-        <div className="post" style={postStyle}>
-            {editable ? (
-                <Formik
-                    initialValues={{
-                        title: "",
-                        content: "",
-                    }}
-                    onSubmit={(values, actions) => {
-                        console.log(values);
-                        console.log("submit !");
-                        actions.setSubmitting(false);
-                    }}
-                >
-                    {() => (
-                        <Form>
-                            {/* <label htmlFor='content'>Content</label> */}
+        <div ref={postRef} className="post" style={postStyle}>
+            <Formik
+                initialValues={{
+                    title: post.title,
+                    content: post.content,
+                }}
+                onSubmit={(values, actions) => {
+                    actions.setSubmitting(false);
+                }}
+            >
+                {({
+                    handleSubmit,
+                    handleChange,
+                    handleBlur,
+                    values,
+                    errors,
+                    touched,
+                }) => (
+                    <Form>
+                        {editable.title ? (
                             <Field
                                 id="title"
                                 name="title"
                                 placeholder="제목을 입력하세요"
-                                onBlur={() => console.log("blur !")}
+                                values={values.title}
+                                onChange={handleChange}
+                                onBlur={() => {
+                                    dispatch(
+                                        reqUpdatePost({ ...post, ...values })
+                                    );
+                                    setEditable({ ...editable, title: false });
+                                }}
                             />
+                        ) : (
+                            <span
+                                className="title"
+                                onClick={() =>
+                                    setEditable({ ...editable, title: true })
+                                }
+                            >
+                                {post.title}
+                            </span>
+                        )}
+                        {editable.content ? (
                             <Field
                                 id="content"
                                 name="content"
                                 placeholder="메모를 작성하세요"
                                 as="textarea"
                                 rows={10}
-                                onBlur={() => console.log("blur !")}
+                                values={values.content}
+                                onChange={handleChange}
+                                onBlur={() => {
+                                    dispatch(
+                                        reqUpdatePost({ ...post, ...values })
+                                    );
+                                    setEditable({
+                                        ...editable,
+                                        content: false,
+                                    });
+                                }}
                             />
-                        </Form>
-                    )}
-                </Formik>
-            ) : (
-                <div className="edit-done" onClick={() => setEditable(true)}>
-                    <span>{post.title}</span>
-                    <span>{post.content}</span>
-                </div>
-            )}
+                        ) : (
+                            <span
+                                className="content"
+                                onClick={() =>
+                                    setEditable({ ...editable, content: true })
+                                }
+                            >
+                                {post.content}
+                            </span>
+                        )}
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 }
