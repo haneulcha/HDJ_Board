@@ -8,13 +8,20 @@ interface PostProps {
 export default function Post({ post }: PostProps): ReactElement {
     const [editable, setEditable] = useState(false);
 
+    // function handleBlur(e: React.MouseEvent):void {
+
+    // }
+
+    const postStyle = {
+        left: post.position.x,
+        top: post.position.y,
+        width: post.size.width,
+        height: post.size.height,
+    };
+
     return (
-        <div className="post">
-            <div onClick={() => setEditable(true)}>
-                <span>{post.title}</span>
-                <span>{post.content}</span>
-            </div>
-            {editable && (
+        <div className="post" style={postStyle}>
+            {editable ? (
                 <Formik
                     initialValues={{
                         title: "",
@@ -46,6 +53,11 @@ export default function Post({ post }: PostProps): ReactElement {
                         </Form>
                     )}
                 </Formik>
+            ) : (
+                <div className="edit-done" onClick={() => setEditable(true)}>
+                    <span>{post.title}</span>
+                    <span>{post.content}</span>
+                </div>
             )}
         </div>
     );

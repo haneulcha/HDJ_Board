@@ -9,7 +9,7 @@ export interface IIsOnLS {
 export interface IPostLS {
     title: string;
     content: string;
-    location: { long: number; lat: number };
+    position: { x: number; y: number };
     size: { width: number; height: number };
     boardId: number;
     timestamp: number;

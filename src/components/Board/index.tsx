@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "./Post";
 import { IIsOnState, IPost, IrootState } from "../../store/_type";
@@ -11,29 +11,40 @@ function Board(): ReactElement {
     const posts: Array<IPost> = useSelector(
         (state: IrootState) => state.post.posts
     );
+    const boardRef = useRef<HTMLDivElement>(null);
+    function handleDbclick(e: React.MouseEvent): void {
+        e.preventDefault();
+        console.log("doubleclick");
+        const elRect = boardRef.current?.getBoundingClientRect();
+        if (elRect) {
+            const relX = e.clientX - elRect.left;
+            const relY = e.clientY - elRect.top;
+            console.log(relX, relY);
+
+            const newPost = {
+                title: "새 포스트",
+                content: "새 메모",
+                position: { x: relX, y: relY },
+                size: { width: 200, height: 180 },
+                boardId: isOn.boardId,
+                timestamp: getNewTimeStamp(),
+            };
+            dispatch(reqCreatePost(newPost));
+        }
+    }
 
     return (
-        <section
-            className="board"
-            onDoubleClick={(e) => {
-                e.preventDefault();
-                console.log("doubleclick");
-                const newPost = {
-                    title: "새 포스트",
-                    content: "새 메모",
-                    location: { long: 100, lat: 100 },
-                    size: { width: 50, height: 50 },
-                    boardId: isOn.boardId,
-                    timestamp: getNewTimeStamp(),
-                };
-
-                dispatch(reqCreatePost(newPost));
-            }}
-        >
-            <h1>{isOn.board}</h1>
-            {posts.map((post: IPost, i: number) => (
-                <Post post={post} key={`post-key-${i}`} />
-            ))}
+        <section className="board">
+            <div
+                ref={boardRef}
+                className="wrapper"
+                onDoubleClick={handleDbclick}
+            >
+                <h1>{isOn.board}</h1>
+                {posts.map((post: IPost, i: number) => (
+                    <Post post={post} key={`post-key-${i}`} />
+                ))}
+            </div>
         </section>
     );
 }

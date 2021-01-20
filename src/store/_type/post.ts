@@ -10,7 +10,7 @@ export const DELETE_POST = "DELETE_POST";
 export interface IPost {
     title: string;
     content: string;
-    location: { long: number; lat: number };
+    position: { x: number; y: number };
     size: { width: number; height: number };
     boardId: number;
     timestamp: number;
