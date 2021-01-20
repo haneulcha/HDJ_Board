@@ -10,7 +10,7 @@ export interface IPostLS {
     content: string;
     location: { long: number; lat: number };
     size: { width: number; height: number };
-    boardId: string;
+    boardId: number;
     timestamp: number;
 }
 

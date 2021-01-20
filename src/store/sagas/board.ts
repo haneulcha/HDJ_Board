@@ -1,72 +1,87 @@
-import { all, call, fork, put, StrictEffect, takeEvery } from 'redux-saga/effects';
-import * as actions from '../_type'
-import { createBoardLS, IBoardLS, getBoardListLS, deleteBoardLS, getIsOnLS, IIsOnLS } from '../../utils'
+import {
+    all,
+    call,
+    fork,
+    put,
+    select,
+    StrictEffect,
+    takeEvery,
+} from "redux-saga/effects";
+import * as actions from "../_type";
+import {
+    createBoardLS,
+    IBoardLS,
+    getBoardListLS,
+    deleteBoardLS,
+    getIsOnLS,
+    IIsOnLS,
+} from "../../utils";
+
+export const getIsOn = (state: actions.IrootState): actions.IIsOnState =>
+    state.isOn;
 
 function* getBoardList() {
-    const boardListLS: Array<IBoardLS> = yield call(getBoardListLS)
+    const boardListLS: Array<IBoardLS> = yield call(getBoardListLS);
     const boardListRD: Array<actions.IBoard> = boardListLS.map(
-        (board:actions.IBoard) => ({ 
+        (board: actions.IBoard) => ({
             index: board.index,
             name: board.name,
-            timestamp: board.timestamp
-        }))
+            timestamp: board.timestamp,
+        })
+    );
     yield put({
-            type: actions.GET_BOARDLIST,
-            payload: boardListRD
-    })
-    
+        type: actions.GET_BOARDLIST,
+        payload: boardListRD,
+    });
 }
-function* createBoard(){
-    const boardLS: IBoardLS = yield call(createBoardLS)
+
+function* createBoard() {
+    const boardLS: IBoardLS = yield call(createBoardLS);
     const boardRD: actions.IBoard = {
         index: boardLS.index,
         name: boardLS.name,
-        timestamp: boardLS.timestamp
-    }
+        timestamp: boardLS.timestamp,
+    };
     yield put({
         type: actions.CREATE_BOARD,
-        payload: boardRD
-    })
+        payload: boardRD,
+    });
 
-    const isOn: IIsOnLS = yield call(getIsOnLS)
+    const isOn: IIsOnLS = yield call(getIsOnLS);
     yield put({
         type: actions.GET_ISON,
-        payload: isOn
-    })
-
+        payload: isOn,
+    });
 }
 
-function* deleteBoard(action: actions.IReqDeleteBoardAction){    
-    const deleteLS: boolean = yield call(deleteBoardLS, action.meta.timestamp)    
-    if(deleteLS){
+function* deleteBoard() {
+    const isOn = yield select(getIsOn);
+    const deleteLS: boolean = yield call(deleteBoardLS, isOn);
+    if (deleteLS) {
         yield put({
-            type: actions.DELETE_BOARD,                
+            type: actions.DELETE_BOARD,
             meta: {
-                timestamp: action.meta.timestamp
-            }
-        })
+                timestamp: isOn.isOn,
+            },
+        });
 
-        const isOn: IIsOnLS = yield call(getIsOnLS)
+        const newIsOn: IIsOnLS = yield call(getIsOnLS);
         yield put({
-        type: actions.GET_ISON,
-        payload: isOn
-    })
+            type: actions.GET_ISON,
+            payload: newIsOn,
+        });
     }
 }
-
 
 function* watchBoard() {
     yield takeEvery(actions.REQ_CREATE_BOARD, createBoard);
-    yield takeEvery(actions.REQ_DELETE_BOARD, deleteBoard)
+    yield takeEvery(actions.REQ_DELETE_BOARD, deleteBoard);
 }
 
 function* watchBoardList() {
-    yield takeEvery(actions.REQ_GET_BOARDLIST, getBoardList)
+    yield takeEvery(actions.REQ_GET_BOARDLIST, getBoardList);
 }
 
-
 export default function* boardSaga(): Generator<StrictEffect, void, unknown> {
-    yield all([
-        fork(watchBoard), fork(watchBoardList)
-    ])
-  }
+    yield all([fork(watchBoard), fork(watchBoardList)]);
+}

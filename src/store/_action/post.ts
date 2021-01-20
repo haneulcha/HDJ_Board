@@ -1,17 +1,16 @@
+import { IPostLS } from "../../utils";
 import {
-    IPost,
-    CREATE_POST,
-    DELETE_POST,
-    PostActionTypes,
     ReqPostActionTypes,
+    IReqGetPostsAction,
     REQ_CREATE_POST,
     REQ_DELETE_POST,
     REQ_GET_POSTS,
 } from "../_type";
 
-export function reqCreatePost(): ReqPostActionTypes {
+export function reqCreatePost(post: IPostLS): ReqPostActionTypes {
     return {
         type: REQ_CREATE_POST,
+        payload: post,
     };
 }
 
@@ -21,12 +20,9 @@ export function reqDeletePost(): ReqPostActionTypes {
     };
 }
 
-export function reqGetPosts(timestamp: number): ReqPostActionTypes {
+export function reqGetPosts(): IReqGetPostsAction {
     return {
         type: REQ_GET_POSTS,
-        payload: {
-            timestamp,
-        },
     };
 }
 

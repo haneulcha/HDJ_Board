@@ -3,3 +3,6 @@ export function exist(key: string): boolean {
     if (existingBoards) return true;
     else return false;
 }
+
+export const getNewTimeStamp = (): number =>
+    Math.round(new Date().getTime() / 100);

@@ -20,11 +20,12 @@ export interface IPostsState {
     posts: Array<IPost>;
 }
 
-interface IReqCreatePostActions {
+export interface IReqCreatePostActions {
     type: typeof REQ_CREATE_POST;
+    payload: IPost;
 }
 
-interface ICreatePostAction {
+export interface ICreatePostAction {
     type: typeof CREATE_POST;
     payload: IPost;
 }
@@ -43,15 +44,14 @@ interface IDeletePostAction {
 
 export interface IReqGetPostsAction {
     type: typeof REQ_GET_POSTS;
-    payload: {
-        timestamp: number;
-    };
 }
 
-interface IGetPostsaction {
+interface IGetPostsAction {
     type: typeof GET_POSTS;
     payload: Array<IPost>;
 }
+
+export type CreatePostActionTypes = IReqCreatePostActions | ICreatePostAction;
 
 export type ReqPostActionTypes =
     | IReqCreatePostActions
@@ -60,4 +60,4 @@ export type ReqPostActionTypes =
 export type PostActionTypes =
     | ICreatePostAction
     | IDeletePostAction
-    | IGetPostsaction;
+    | IGetPostsAction;

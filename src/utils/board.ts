@@ -1,11 +1,8 @@
 import { IBoardLS, KEY_BOARDS } from "./type";
-import { exist } from "./localstorage";
+import { exist, getNewTimeStamp } from "./localstorage";
 import { updateIsOnLS } from "./isOn";
 
 export function createBoardLS(): IBoardLS {
-    const getNewTimeStamp = (): number =>
-        Math.round(new Date().getTime() / 100);
-
     const existingBoards = localStorage.getItem(KEY_BOARDS) || "[]";
     const parsedBoards: Array<IBoardLS> = JSON.parse(existingBoards);
     const board: IBoardLS = {
