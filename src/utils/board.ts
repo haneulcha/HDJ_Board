@@ -12,7 +12,7 @@ export function createBoardLS(): IBoardLS {
         posts: [],
     };
     localStorage.setItem(KEY_BOARDS, JSON.stringify([...parsedBoards, board]));
-    updateIsOnLS(board.timestamp);
+    updateIsOnLS(board.name, board.timestamp);
 
     return board;
 }
@@ -29,9 +29,8 @@ export function deleteBoardLS(timestamp: number): boolean {
     localStorage.setItem(KEY_BOARDS, JSON.stringify(filteredBoards));
 
     // isOn을 마지막 보드로 이동
-    const lastBoardTimestamp =
-        filteredBoards[filteredBoards.length - 1].timestamp;
-    updateIsOnLS(lastBoardTimestamp);
+    const lastBoard = filteredBoards[filteredBoards.length - 1];
+    updateIsOnLS(lastBoard.name, lastBoard.timestamp);
     return true;
 }
 

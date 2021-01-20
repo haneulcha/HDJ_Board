@@ -15,7 +15,7 @@ export const getIsOn = (state: actions.IrootState): actions.IIsOnState =>
 
 function* getPosts() {
     const isOn = yield select(getIsOn);
-    const postsLS: Array<IPostLS> = yield call(getPostsLS, isOn.isOn);
+    const postsLS: Array<IPostLS> = yield call(getPostsLS, isOn.boardId);
     yield put({
         type: actions.GET_POSTS,
         payload: postsLS,

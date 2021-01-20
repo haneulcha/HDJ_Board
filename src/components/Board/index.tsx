@@ -1,13 +1,13 @@
 import React, { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "./Post";
-import { IPost, IrootState } from "../../store/_type";
+import { IIsOnState, IPost, IrootState } from "../../store/_type";
 import { reqCreatePost } from "../../store/_action/post";
 import { getNewTimeStamp } from "../../utils/localstorage";
 
 function Board(): ReactElement {
     const dispatch = useDispatch();
-    const isOn: number = useSelector((state: IrootState) => state.isOn.isOn);
+    const isOn: IIsOnState = useSelector((state: IrootState) => state.isOn);
     const posts: Array<IPost> = useSelector(
         (state: IrootState) => state.post.posts
     );
@@ -23,14 +23,14 @@ function Board(): ReactElement {
                     content: "새 메모",
                     location: { long: 100, lat: 100 },
                     size: { width: 50, height: 50 },
-                    boardId: isOn,
+                    boardId: isOn.boardId,
                     timestamp: getNewTimeStamp(),
                 };
 
                 dispatch(reqCreatePost(newPost));
             }}
         >
-            보드
+            <h1>{isOn.board}</h1>
             {posts.map((post: IPost, i: number) => (
                 <Post post={post} key={`post-key-${i}`} />
             ))}

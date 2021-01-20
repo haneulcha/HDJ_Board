@@ -1,18 +1,19 @@
-import { IBoard } from './board'
-import { IPost } from './post'
+import { IBoard } from "./board";
+import { IPost } from "./post";
 
 export interface IrootState {
     board: {
-        boards: Array<IBoard>
-    }
+        boards: Array<IBoard>;
+    };
     post: {
-        posts: Array<IPost>
-    }
+        posts: Array<IPost>;
+    };
     isOn: {
-        isOn: number
-    }
+        board: string;
+        boardId: number;
+    };
 }
 
-export * from './board'
-export * from './isOn'
-export * from './post'
+export * from "./board";
+export * from "./isOn";
+export * from "./post";

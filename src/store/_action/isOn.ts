@@ -6,11 +6,12 @@ export function reqGetIsOn(): IsOnActionTypes {
     };
 }
 
-export function reqUpdateIsOn(timestamp: number): IsOnActionTypes {
+export function reqUpdateIsOn(board: string, boardId: number): IsOnActionTypes {
     return {
         type: REQ_UPDATE_ISON,
         payload: {
-            isOn: timestamp,
+            board,
+            boardId,
         },
     };
 }

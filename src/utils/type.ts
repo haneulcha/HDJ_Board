@@ -2,7 +2,8 @@ export const KEY_BOARDS = "Boards";
 export const KEY_IS_ON = "isOn";
 
 export interface IIsOnLS {
-    isOn: number;
+    board: string;
+    boardId: number;
 }
 
 export interface IPostLS {

@@ -1,8 +1,9 @@
 import { KEY_IS_ON, IIsOnLS } from "./type";
 // 이미 생성된 보드를 클릭할 때만 호출
-export function updateIsOnLS(timestamp: number): void {
+export function updateIsOnLS(board: string, boardId: number): void {
     const isOn = {
-        isOn: timestamp,
+        board,
+        boardId,
     };
     localStorage.setItem(KEY_IS_ON, JSON.stringify(isOn));
 }

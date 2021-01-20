@@ -14,7 +14,7 @@ export default function List({ board }: ListProps): ReactElement {
     const handleBoardOn = (e: MouseEvent) => {
         e.preventDefault();
         console.log("now click the list");
-        dispatch(reqUpdateIsOn(board.timestamp));
+        dispatch(reqUpdateIsOn(board.name, board.timestamp));
     };
     const handleDeleteBoard = (e: MouseEvent) => {
         e.stopPropagation();

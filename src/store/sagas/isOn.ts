@@ -11,12 +11,10 @@ import { getIsOnLS, updateIsOnLS } from "../../utils";
 
 // 보드를 클릭할 때
 function* updateIsOn(action: actions.IReqUpdateIsOnAction) {
-    yield call(updateIsOnLS, action.payload.isOn);
+    yield call(updateIsOnLS, action.payload.board, action.payload.boardId);
     yield put({
         type: actions.GET_ISON,
-        payload: {
-            isOn: action.payload.isOn,
-        },
+        payload: action.payload,
     });
 }
 
@@ -25,9 +23,7 @@ function* getIsOn() {
     const isOn: actions.IIsOnState = yield call(getIsOnLS);
     yield put({
         type: actions.GET_ISON,
-        payload: {
-            isOn: isOn.isOn,
-        },
+        payload: isOn,
     });
 }
 function* watchIsOn() {
