@@ -9,13 +9,15 @@ export default function BoardName(): ReactElement {
     const isOn: IIsOnState = useSelector((state: IrootState) => state.isOn);
     const [editable, setEditable] = useState(false);
 
-    function valInput(value: string): string | undefined {
-        let error;
-        if (!value) {
-            error = "Required";
-        }
-        return error;
+    function dispatchUpdate(values: { name: string }): void {
+        dispatch(
+            reqUpdateBoard({
+                name: values.name,
+                timestamp: isOn.boardId,
+            })
+        );
     }
+
     return (
         <Formik
             initialValues={{
@@ -23,11 +25,15 @@ export default function BoardName(): ReactElement {
             }}
             onSubmit={(values, actions) => {
                 console.log(values);
+                if (values.name) {
+                    dispatchUpdate(values);
+                }
+                setEditable(false);
                 actions.setSubmitting(false);
             }}
             enableReinitialize
         >
-            {({ handleChange, values, validateField, errors }) => (
+            {({ handleChange, values }) => (
                 <Form>
                     {editable ? (
                         <Field
@@ -35,16 +41,11 @@ export default function BoardName(): ReactElement {
                             name="name"
                             placeholder={isOn.board}
                             values={isOn.board}
-                            validate={valInput}
                             onChange={handleChange}
                             onBlur={() => {
-                                validateField("name");
-                                // dispatch(
-                                //     reqUpdateBoard({
-                                //         name: values.name,
-                                //         timestamp: isOn.boardId,
-                                //     })
-                                // );
+                                if (values.name) {
+                                    dispatchUpdate(values);
+                                }
                                 setEditable(false);
                             }}
                         />
@@ -56,7 +57,6 @@ export default function BoardName(): ReactElement {
                             >
                                 {isOn.board}
                             </h1>
-                            {errors.name && <span>{errors.name}</span>}
                         </>
                     )}
                 </Form>

@@ -1,10 +1,23 @@
 import React, { ReactElement, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Post from "./Post";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+
 import { IIsOnState, IPost, IrootState } from "../../store/_type";
 import { reqCreatePost } from "../../store/_action/post";
 import { getNewTimeStamp } from "../../utils/localstorage";
 import BoardName from "./BoardName";
+import Post from "./Post";
+
+const useStyles = makeStyles({
+    board: {
+        background: "#ecf4f9",
+        border: 1,
+        width: "100%",
+        height: "100%",
+        padding: "0",
+    },
+});
 
 function Board(): ReactElement {
     const dispatch = useDispatch();
@@ -13,6 +26,9 @@ function Board(): ReactElement {
         (state: IrootState) => state.post.posts
     );
     const boardRef = useRef<HTMLDivElement>(null);
+
+    const classes = useStyles();
+
     function handleDbclick(e: React.MouseEvent): void {
         e.preventDefault();
         console.log("doubleclick");
@@ -35,7 +51,7 @@ function Board(): ReactElement {
     }
 
     return (
-        <section className="board">
+        <Paper className={classes.board}>
             <div
                 ref={boardRef}
                 className="wrapper"
@@ -46,7 +62,7 @@ function Board(): ReactElement {
                     <Post post={post} key={`post-key-${i}`} />
                 ))}
             </div>
-        </section>
+        </Paper>
     );
 }
 

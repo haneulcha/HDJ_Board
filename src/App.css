@@ -7,9 +7,14 @@ h1 {
     padding: 0;
 }
 
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 section.board-list {
     background-color: bisque;
-    width: 13rem;
+    width: 16rem;
     height: 100%;
 }
 
@@ -22,10 +27,6 @@ section.board {
 .wrapper {
     height: 100%;
     position: relative;
-}
-.post {
-    background-color: blanchedalmond;
-    position: absolute;
 }
 
 .post .edit-done {
