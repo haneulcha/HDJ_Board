@@ -15,6 +15,7 @@ import {
     deleteBoardLS,
     getIsOnLS,
     IIsOnLS,
+    updateBoardLS,
 } from "../../utils";
 
 export const getIsOn = (state: actions.IrootState): actions.IIsOnState =>
@@ -54,6 +55,18 @@ function* createBoard() {
     });
 }
 
+function* updateBoard(action: actions.IReqUpdateBoardAction) {
+    yield call(updateBoardLS, action.payload);
+    yield call(getBoardList);
+    yield put({
+        type: actions.GET_ISON,
+        payload: {
+            board: action.payload.name,
+            boardId: action.payload.timestamp,
+        },
+    });
+}
+
 function* deleteBoard() {
     const isOn = yield select(getIsOn);
     const deleteLS: boolean = yield call(deleteBoardLS, isOn);
@@ -76,6 +89,7 @@ function* deleteBoard() {
 function* watchBoard() {
     yield takeEvery(actions.REQ_CREATE_BOARD, createBoard);
     yield takeEvery(actions.REQ_DELETE_BOARD, deleteBoard);
+    yield takeEvery(actions.REQ_UPDATE_BOARD, updateBoard);
 }
 
 function* watchBoardList() {

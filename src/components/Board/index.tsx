@@ -4,6 +4,7 @@ import Post from "./Post";
 import { IIsOnState, IPost, IrootState } from "../../store/_type";
 import { reqCreatePost } from "../../store/_action/post";
 import { getNewTimeStamp } from "../../utils/localstorage";
+import BoardName from "./BoardName";
 
 function Board(): ReactElement {
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ function Board(): ReactElement {
                 className="wrapper"
                 onDoubleClick={handleDbclick}
             >
-                <h1>{isOn.board}</h1>
+                <BoardName />
                 {posts.map((post: IPost, i: number) => (
                     <Post post={post} key={`post-key-${i}`} />
                 ))}

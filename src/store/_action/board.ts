@@ -5,6 +5,8 @@ import {
     BoardActionTypes,
     BoardListActionTypes,
     IReqDeleteBoardAction,
+    IReqUpdateBoardAction,
+    REQ_UPDATE_BOARD,
 } from "../_type";
 
 export function reqCreateBoard(): BoardActionTypes {
@@ -16,6 +18,19 @@ export function reqCreateBoard(): BoardActionTypes {
 export function reqGetBoardList(): BoardListActionTypes {
     return {
         type: REQ_GET_BOARDLIST,
+    };
+}
+
+export function reqUpdateBoard(data: {
+    name: string;
+    timestamp: number;
+}): IReqUpdateBoardAction {
+    return {
+        type: REQ_UPDATE_BOARD,
+        payload: {
+            name: data.name,
+            timestamp: data.timestamp,
+        },
     };
 }
 

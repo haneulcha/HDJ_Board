@@ -17,6 +17,22 @@ export function createBoardLS(): IBoardLS {
     return board;
 }
 
+export function updateBoardLS(data: {
+    name: string;
+    timestamp: number;
+}): boolean {
+    const existingBoards = localStorage.getItem(KEY_BOARDS) || "[]";
+    const parsedBoards: Array<IBoardLS> = JSON.parse(existingBoards);
+    const updatedBoards: Array<IBoardLS> = parsedBoards.map((board) =>
+        board.timestamp === data.timestamp
+            ? { ...board, name: data.name }
+            : board
+    );
+    localStorage.setItem(KEY_BOARDS, JSON.stringify(updatedBoards));
+    updateIsOnLS(data.name, data.timestamp);
+    return true;
+}
+
 export function deleteBoardLS(timestamp: number): boolean {
     const existingBoards = localStorage.getItem(KEY_BOARDS);
     if (!existingBoards) {
