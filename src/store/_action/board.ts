@@ -34,8 +34,11 @@ export function reqUpdateBoard(data: {
     };
 }
 
-export function reqDeleteBoard(): IReqDeleteBoardAction {
+export function reqDeleteBoard(timestamp: number): IReqDeleteBoardAction {
     return {
         type: REQ_DELETE_BOARD,
+        meta: {
+            timestamp,
+        },
     };
 }

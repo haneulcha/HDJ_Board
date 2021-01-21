@@ -67,14 +67,13 @@ function* updateBoard(action: actions.IReqUpdateBoardAction) {
     });
 }
 
-function* deleteBoard() {
-    const isOn = yield select(getIsOn);
-    const deleteLS: boolean = yield call(deleteBoardLS, isOn);
+function* deleteBoard(action: actions.IReqDeleteBoardAction) {
+    const deleteLS: boolean = yield call(deleteBoardLS, action.meta.timestamp);
     if (deleteLS) {
         yield put({
             type: actions.DELETE_BOARD,
             meta: {
-                timestamp: isOn.isOn,
+                timestamp: action.meta.timestamp,
             },
         });
 

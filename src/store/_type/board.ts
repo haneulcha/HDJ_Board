@@ -47,6 +47,9 @@ export interface IUpdateBoardAction {
 
 export interface IReqDeleteBoardAction {
     type: typeof REQ_DELETE_BOARD;
+    meta: {
+        timestamp: number;
+    };
 }
 
 interface IDeleteBoardAction {

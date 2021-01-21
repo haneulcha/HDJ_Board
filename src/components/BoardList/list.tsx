@@ -19,7 +19,7 @@ export default function List({ board }: ListProps): ReactElement {
     const handleDeleteBoard = (e: MouseEvent) => {
         e.stopPropagation();
         e.preventDefault();
-        dispatch(reqDeleteBoard());
+        dispatch(reqDeleteBoard(board.timestamp));
     };
 
     return (
