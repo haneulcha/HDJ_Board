@@ -34,15 +34,18 @@ export interface ICreatePostAction {
     payload: IPost;
 }
 
-interface IReqDeletePostAction {
+export interface IReqDeletePostAction {
     type: typeof REQ_DELETE_POST;
-}
-
-interface IDeletePostAction {
-    type: typeof DELETE_POST;
     meta: {
         boardId: number;
-        timestamp: number; // TODO: 지울 때 timestamp를 기록하는 이유
+        timestamp: number;
+    };
+}
+
+export interface IDeletePostAction {
+    type: typeof DELETE_POST;
+    meta: {
+        timestamp: number;
     };
 }
 

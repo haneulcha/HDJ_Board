@@ -40,13 +40,21 @@ export function updatePostLS(editedPost: IPostLS): boolean {
     );
     localStorage.setItem(KEY_BOARDS, JSON.stringify(updatedBoard));
     return true;
+}
 
-    // const board: Array<IBoardLS> = parsedBoards.filter(
-    //     (board) => board.timestamp === editedPost.boardId
-    // );
-
-    // const updatdPosts: Array<IPostLS> = board[0].posts.map((post) =>
-    //     post.timestamp === editedPost.timestamp
-    //     ? editedPost : post
-    // )
+export function deletePostLS(boardId: number, timestamp: number): boolean {
+    const boards = localStorage.getItem(KEY_BOARDS) || "[]";
+    const parsedBoards: Array<IBoardLS> = JSON.parse(boards);
+    const updatedBoard: Array<IBoardLS> = parsedBoards.map((board: IBoardLS) =>
+        board.timestamp === boardId
+            ? {
+                  ...board,
+                  posts: board.posts.filter(
+                      (post) => post.timestamp !== timestamp
+                  ),
+              }
+            : board
+    );
+    localStorage.setItem(KEY_BOARDS, JSON.stringify(updatedBoard));
+    return true;
 }

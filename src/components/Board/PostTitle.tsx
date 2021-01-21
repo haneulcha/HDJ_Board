@@ -6,7 +6,7 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CloseIcon from "@material-ui/icons/Close";
 import { PostProps } from "./Post";
-import { reqUpdatePost } from "../../store/_action/post";
+import { reqUpdatePost, reqDeletePost } from "../../store/_action/post";
 
 export default function PostTitle({ post }: PostProps): ReactElement {
     const dispatch = useDispatch();
@@ -106,7 +106,12 @@ export default function PostTitle({ post }: PostProps): ReactElement {
                     />
                 )}
 
-                <CloseIcon className={classes.closeBtn} />
+                <CloseIcon
+                    className={classes.closeBtn}
+                    onClick={() =>
+                        dispatch(reqDeletePost(post.boardId, post.timestamp))
+                    }
+                />
             </div>
         </>
     );

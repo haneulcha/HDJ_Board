@@ -7,6 +7,7 @@ import {
     REQ_DELETE_POST,
     REQ_GET_POSTS,
     REQ_UPDATE_POST,
+    IReqDeletePostAction,
 } from "../_type";
 
 export function reqCreatePost(post: IPostLS): ReqPostActionTypes {
@@ -16,9 +17,16 @@ export function reqCreatePost(post: IPostLS): ReqPostActionTypes {
     };
 }
 
-export function reqDeletePost(): ReqPostActionTypes {
+export function reqDeletePost(
+    boardId: number,
+    timestamp: number
+): IReqDeletePostAction {
     return {
         type: REQ_DELETE_POST,
+        meta: {
+            boardId,
+            timestamp,
+        },
     };
 }
 
