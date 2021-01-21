@@ -43,6 +43,7 @@ function Board(): ReactElement {
                 content: "새 메모",
                 position: { x: relX, y: relY },
                 size: { width: 200, height: 180 },
+                isOpen: true,
                 boardId: isOn.boardId,
                 timestamp: getNewTimeStamp(),
             };

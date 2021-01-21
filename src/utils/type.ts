@@ -11,6 +11,7 @@ export interface IPostLS {
     content: string;
     position: { x: number; y: number };
     size: { width: number; height: number };
+    isOpen: boolean;
     boardId: number;
     timestamp: number;
 }

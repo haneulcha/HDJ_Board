@@ -1,11 +1,12 @@
 import React, { ReactElement } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Rnd } from "react-rnd";
 
 import { IPost } from "../../store/_type";
 import { reqUpdatePost } from "../../store/_action/post";
-import PostForm from "./PostForm";
+import PostTitle from "./PostTitle";
+import PostContent from "./PostContent";
 
 export interface PostProps {
     post: IPost;
@@ -14,6 +15,7 @@ export interface PostProps {
 export default function Post({ post }: PostProps): ReactElement {
     // const postRef = useRef<HTMLDivElement>(null); // TODO: 필요없을지도
     const dispatch = useDispatch();
+
     const useStyles = makeStyles({
         post: {
             position: "absolute",
@@ -28,11 +30,10 @@ export default function Post({ post }: PostProps): ReactElement {
         <>
             <Rnd
                 className={classes.post}
-                default={{
-                    x: post.position.x,
-                    y: post.position.y,
+                position={{ x: post.position.x, y: post.position.y }}
+                size={{
                     width: post.size.width,
-                    height: post.size.height,
+                    height: post.isOpen ? post.size.height : "35px",
                 }}
                 onDragStop={(e, d) => {
                     console.log(d.x, d.y);
@@ -53,10 +54,10 @@ export default function Post({ post }: PostProps): ReactElement {
                     );
                 }}
                 minWidth={100}
-                minHeight={190}
                 bounds="window"
             >
-                <PostForm post={post} />
+                <PostTitle post={post} />
+                {post.isOpen && <PostContent post={post} />}
             </Rnd>
         </>
     );

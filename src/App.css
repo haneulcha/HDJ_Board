@@ -12,6 +12,12 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+form,
+textarea {
+    width: 100%;
+    height: 100%;
+}
 section.board-list {
     background-color: bisque;
     width: 16rem;
