@@ -23,7 +23,6 @@ export default function PostTitle(
             padding: ".3em .5em",
             backgroundColor: "#c9c9e8",
             borderBottom: ".5px solid #bfbeda",
-            cursor: "auto",
         },
         title: {
             maxWidth: "75%",

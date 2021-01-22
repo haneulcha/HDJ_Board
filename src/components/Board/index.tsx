@@ -28,6 +28,10 @@ function Board(): ReactElement {
     const boardRef = useRef<HTMLDivElement>(null);
 
     const useStyles = makeStyles({
+        boardWrapper: {
+            height: "100%",
+            position: "relative",
+        },
         board: {
             background: "#f1f2f4",
             border: 1,
@@ -56,7 +60,6 @@ function Board(): ReactElement {
     // create a new post when double-clicking the board
     function handleDoubleclick(e: React.MouseEvent): void {
         e.preventDefault();
-
         const elRect = boardRef.current?.getBoundingClientRect();
         if (elRect) {
             const relX = e.clientX - elRect.left;
@@ -81,7 +84,7 @@ function Board(): ReactElement {
         <Paper className={classes.board}>
             <div
                 ref={boardRef}
-                className="wrapper"
+                className={classes.boardWrapper}
                 onDoubleClick={handleDoubleclick}
             >
                 <BoardName />

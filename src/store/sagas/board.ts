@@ -3,7 +3,6 @@ import {
     call,
     fork,
     put,
-    select,
     StrictEffect,
     takeEvery,
 } from "redux-saga/effects";

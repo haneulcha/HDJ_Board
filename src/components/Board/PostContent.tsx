@@ -26,6 +26,7 @@ export default function PostContent(
                 fontSize: "unset",
                 border: "none",
                 outline: "1px dashed gray",
+                height: "100%",
             },
         },
     });

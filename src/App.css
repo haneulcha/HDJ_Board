@@ -18,24 +18,3 @@ textarea {
     width: 100%;
     height: 100%;
 }
-section.board-list {
-    background-color: bisque;
-    width: 16rem;
-    height: 100%;
-}
-
-section.board {
-    background-color: aliceblue;
-    width: 100%;
-    height: 100%;
-}
-
-.wrapper {
-    height: 100%;
-    position: relative;
-}
-
-.post .edit-done {
-    display: flex;
-    flex-direction: column;
-}
