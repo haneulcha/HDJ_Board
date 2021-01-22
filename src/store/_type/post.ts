@@ -18,6 +18,7 @@ export interface IPost {
     isOpen: boolean;
     boardId: number;
     timestamp: number;
+    modified: number;
 }
 
 export interface IPostsState {

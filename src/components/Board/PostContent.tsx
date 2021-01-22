@@ -1,13 +1,16 @@
 import React, { ReactElement, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Formik, Field, Form } from "formik";
+import { Field, FormikProps } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
-import { PostProps } from "./Post";
+import { PostProps, FormValues, firstEditProps } from ".";
 import { reqUpdatePost } from "../../store/_action/post";
 
-export default function PostContent({ post }: PostProps): ReactElement {
+export default function PostContent(
+    props: PostProps & FormikProps<FormValues> & firstEditProps
+): ReactElement {
+    const { post, edit, handleChange, values } = props;
     const dispatch = useDispatch();
-    const [editable, setEditable] = useState(false);
+    const [editable, setEditable] = useState(edit);
 
     const useStyles = makeStyles({
         content: {
@@ -22,38 +25,23 @@ export default function PostContent({ post }: PostProps): ReactElement {
         <>
             <div className={classes.content}>
                 {editable ? (
-                    <Formik
-                        initialValues={{
-                            content: post.content,
+                    <Field
+                        id="content"
+                        name="content"
+                        as="textarea"
+                        placeholder="내용을 입력하세요"
+                        values={values.content}
+                        onChange={handleChange}
+                        onBlur={() => {
+                            dispatch(
+                                reqUpdatePost({
+                                    ...post,
+                                    ...values,
+                                })
+                            );
+                            setEditable(false);
                         }}
-                        onSubmit={(values, actions) => {
-                            actions.setSubmitting(false);
-                        }}
-                    >
-                        {({ handleChange, values }) => (
-                            <Form>
-                                {editable && (
-                                    <Field
-                                        id="content"
-                                        name="content"
-                                        as="textarea"
-                                        placeholder="내용을 입력하세요"
-                                        values={values.content}
-                                        onChange={handleChange}
-                                        onBlur={() => {
-                                            dispatch(
-                                                reqUpdatePost({
-                                                    ...post,
-                                                    ...values,
-                                                })
-                                            );
-                                            setEditable(false);
-                                        }}
-                                    />
-                                )}
-                            </Form>
-                        )}
-                    </Formik>
+                    />
                 ) : (
                     <div
                         className={classes.content}

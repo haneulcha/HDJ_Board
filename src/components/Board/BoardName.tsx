@@ -24,7 +24,6 @@ export default function BoardName(): ReactElement {
                 name: isOn.board,
             }}
             onSubmit={(values, actions) => {
-                console.log(values);
                 if (values.name) {
                     dispatchUpdate(values);
                 }
@@ -42,6 +41,7 @@ export default function BoardName(): ReactElement {
                             placeholder={isOn.board}
                             values={isOn.board}
                             onChange={handleChange}
+                            autoFocus
                             onBlur={() => {
                                 if (values.name) {
                                     dispatchUpdate(values);

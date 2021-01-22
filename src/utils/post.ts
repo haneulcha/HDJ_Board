@@ -1,3 +1,4 @@
+import { getNewTimeStamp } from "./localstorage";
 import { IPostLS, IBoardLS, KEY_BOARDS } from "./type";
 
 export function getPostsLS(boardTimestamp: number): Array<IPostLS> {
@@ -32,7 +33,7 @@ export function updatePostLS(editedPost: IPostLS): boolean {
                   ...board,
                   posts: board.posts.map((post) =>
                       post.timestamp === editedPost.timestamp
-                          ? editedPost
+                          ? { ...editedPost, modified: getNewTimeStamp() }
                           : post
                   ),
               }

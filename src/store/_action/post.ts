@@ -42,19 +42,3 @@ export function reqUpdatePost(post: IPostLS): IReqUpdatePostAction {
         payload: post,
     };
 }
-// export function createPost(newPost: IPost): PostActionTypes {
-//     return {
-//         type: CREATE_POST,
-//         payload: newPost
-//     }
-// }
-
-// export function deletePost(boardId: number, timestamp: number): PostActionTypes {
-//     return {
-//         type: DELETE_POST,
-//         meta: {
-//             boardId,
-//             timestamp
-//         }
-//     }
-// }

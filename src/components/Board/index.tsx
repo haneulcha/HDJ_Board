@@ -2,12 +2,23 @@ import React, { ReactElement, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-
+import { useHotkeys } from "react-hotkeys-hook";
 import { IIsOnState, IPost, IrootState } from "../../store/_type";
 import { reqCreatePost } from "../../store/_action/post";
 import { getNewTimeStamp } from "../../utils/localstorage";
 import BoardName from "./BoardName";
 import Post from "./Post";
+
+export interface firstEditProps {
+    edit: boolean;
+}
+export interface PostProps {
+    post: IPost;
+}
+export interface FormValues {
+    title: string;
+    content: string;
+}
 
 const useStyles = makeStyles({
     board: {
@@ -25,27 +36,32 @@ function Board(): ReactElement {
     const posts: Array<IPost> = useSelector(
         (state: IrootState) => state.post.posts
     );
+    useHotkeys("ctrl+p, command+p", (event: KeyboardEvent, handler) => {
+        event.preventDefault();
+        console.log("event", event);
+        console.log("handler", handler);
+    });
     const boardRef = useRef<HTMLDivElement>(null);
 
     const classes = useStyles();
 
     function handleDbclick(e: React.MouseEvent): void {
         e.preventDefault();
-        console.log("doubleclick");
+
         const elRect = boardRef.current?.getBoundingClientRect();
         if (elRect) {
             const relX = e.clientX - elRect.left;
             const relY = e.clientY - elRect.top;
-            console.log(relX, relY);
 
             const newPost = {
-                title: "새 포스트",
-                content: "새 메모",
+                title: "",
+                content: "",
                 position: { x: relX, y: relY },
-                size: { width: 200, height: 180 },
+                size: { width: 220, height: 180 },
                 isOpen: true,
                 boardId: isOn.boardId,
                 timestamp: getNewTimeStamp(),
+                modified: 0,
             };
             dispatch(reqCreatePost(newPost));
         }
@@ -60,7 +76,11 @@ function Board(): ReactElement {
             >
                 <BoardName />
                 {posts.map((post: IPost, i: number) => (
-                    <Post post={post} key={`post-key-${i}`} />
+                    <Post
+                        post={post}
+                        key={`post-key-${i}`}
+                        edit={post.modified ? false : true}
+                    />
                 ))}
             </div>
         </Paper>

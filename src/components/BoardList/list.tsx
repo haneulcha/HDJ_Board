@@ -1,6 +1,7 @@
 import React, { ReactElement, MouseEvent } from "react";
 import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import CloseIcon from "@material-ui/icons/Close";
 import { reqDeleteBoard } from "../../store/_action/board";
 import { reqUpdateIsOn } from "../../store/_action/isOn";
 import { IBoard } from "../../store/_type";
@@ -24,7 +25,6 @@ export default function List({ board }: ListProps): ReactElement {
     });
     const handleBoardOn = (e: MouseEvent) => {
         e.preventDefault();
-        console.log("now click the list");
         dispatch(reqUpdateIsOn(board.name, board.timestamp));
     };
     const handleDeleteBoard = (e: MouseEvent) => {
@@ -42,7 +42,7 @@ export default function List({ board }: ListProps): ReactElement {
                 onClick={handleBoardOn}
             >
                 {board.name}
-                <button onClick={handleDeleteBoard}>🗑</button>
+                <CloseIcon onClick={handleDeleteBoard} />
             </li>
         </>
     );

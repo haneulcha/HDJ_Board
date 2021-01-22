@@ -14,6 +14,7 @@ export interface IPostLS {
     isOpen: boolean;
     boardId: number;
     timestamp: number;
+    modified: number;
 }
 
 export interface IBoardLS {
