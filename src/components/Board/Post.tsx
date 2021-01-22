@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
 import { Rnd } from "react-rnd";
 import { PostProps, firstEditProps } from ".";
-
 import { reqUpdatePost } from "../../store/_action/post";
 import PostTitle from "./PostTitle";
 import PostContent from "./PostContent";
@@ -13,7 +12,6 @@ export default function Post({
     post,
     edit,
 }: PostProps & firstEditProps): ReactElement {
-    // const postRef = useRef<HTMLDivElement>(null); // TODO: 필요없을지도
     const dispatch = useDispatch();
 
     const useStyles = makeStyles({

@@ -36,16 +36,27 @@ function Board(): ReactElement {
     const posts: Array<IPost> = useSelector(
         (state: IrootState) => state.post.posts
     );
-    useHotkeys("ctrl+p, command+p", (event: KeyboardEvent, handler) => {
-        event.preventDefault();
-        console.log("event", event);
-        console.log("handler", handler);
-    });
     const boardRef = useRef<HTMLDivElement>(null);
-
     const classes = useStyles();
 
-    function handleDbclick(e: React.MouseEvent): void {
+    // create a new post when pressing shortcut
+    useHotkeys("ctrl+alt+n, command+alt+n", (event: KeyboardEvent) => {
+        event.preventDefault();
+        const newPost = {
+            title: "",
+            content: "",
+            position: { x: 200, y: 200 },
+            size: { width: 220, height: 180 },
+            isOpen: true,
+            boardId: isOn.boardId,
+            timestamp: getNewTimeStamp(),
+            modified: 0,
+        };
+        dispatch(reqCreatePost(newPost));
+    });
+
+    // create a new post when double-clicking the board
+    function handleDoubleclick(e: React.MouseEvent): void {
         e.preventDefault();
 
         const elRect = boardRef.current?.getBoundingClientRect();
@@ -72,7 +83,7 @@ function Board(): ReactElement {
             <div
                 ref={boardRef}
                 className="wrapper"
-                onDoubleClick={handleDbclick}
+                onDoubleClick={handleDoubleclick}
             >
                 <BoardName />
                 {posts.map((post: IPost, i: number) => (
