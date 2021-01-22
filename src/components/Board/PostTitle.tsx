@@ -12,22 +12,30 @@ export default function PostTitle(
     const { post, edit, handleChange, values } = props;
     const dispatch = useDispatch();
     const [editable, setEditable] = useState(edit);
-    const { title } = post;
 
     const useStyles = makeStyles({
         titleWrapper: {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            cursor: "move",
-            backgroundColor: "#bae8e8",
             width: "100%",
             height: "35px",
+            padding: ".3em .5em",
+            backgroundColor: "#c9c9e8",
+            borderBottom: ".5px solid #bfbeda",
+            cursor: "auto",
         },
         title: {
+            maxWidth: "75%",
             minWidth: "30%",
-            height: "100%",
-            cursor: "auto",
+            backgroundColor: "transparent",
+            fontSize: ".9em",
+            fontWeight: "bold",
+            cursor: "text",
+            "&:focus": {
+                border: "none",
+                outline: "1px dashed gray",
+            },
         },
         btns: {
             cursor: "pointer",
@@ -47,13 +55,15 @@ export default function PostTitle(
                     autoFocus
                     onChange={handleChange}
                     onBlur={() => {
-                        dispatch(
-                            reqUpdatePost({
-                                ...post,
-                                ...values,
-                            })
-                        );
-                        setEditable(false);
+                        if (values.title) {
+                            dispatch(
+                                reqUpdatePost({
+                                    ...post,
+                                    ...values,
+                                })
+                            );
+                            setEditable(false);
+                        }
                     }}
                 />
             ) : (
@@ -61,7 +71,7 @@ export default function PostTitle(
                     className={classes.title}
                     onClick={() => setEditable(true)}
                 >
-                    {title}
+                    {post.title}
                 </div>
             )}
             <PostTitleButtons post={post} />

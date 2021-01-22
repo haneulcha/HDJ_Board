@@ -19,6 +19,8 @@ export default function Post({
             position: "absolute",
             background: "#ffffff",
             padding: "0",
+            border: ".5px solid #bfbeda",
+            borderRadius: 1,
         },
     });
 

@@ -1,8 +1,8 @@
 import React, { ReactElement, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHotkeys } from "react-hotkeys-hook";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { useHotkeys } from "react-hotkeys-hook";
 import { IIsOnState, IPost, IrootState } from "../../store/_type";
 import { reqCreatePost } from "../../store/_action/post";
 import { getNewTimeStamp } from "../../utils/localstorage";
@@ -19,17 +19,6 @@ export interface FormValues {
     title: string;
     content: string;
 }
-
-const useStyles = makeStyles({
-    board: {
-        background: "#ecf4f9",
-        border: 1,
-        width: "100%",
-        height: "100%",
-        padding: "0",
-    },
-});
-
 function Board(): ReactElement {
     const dispatch = useDispatch();
     const isOn: IIsOnState = useSelector((state: IrootState) => state.isOn);
@@ -37,7 +26,16 @@ function Board(): ReactElement {
         (state: IrootState) => state.post.posts
     );
     const boardRef = useRef<HTMLDivElement>(null);
-    const classes = useStyles();
+
+    const useStyles = makeStyles({
+        board: {
+            background: "#f1f2f4",
+            border: 1,
+            width: "100%",
+            height: "100%",
+            padding: "0",
+        },
+    });
 
     // create a new post when pressing shortcut
     useHotkeys("ctrl+alt+n, command+alt+n", (event: KeyboardEvent) => {
@@ -78,6 +76,7 @@ function Board(): ReactElement {
         }
     }
 
+    const classes = useStyles();
     return (
         <Paper className={classes.board}>
             <div

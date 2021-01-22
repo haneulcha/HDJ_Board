@@ -15,8 +15,18 @@ export default function PostContent(
     const useStyles = makeStyles({
         content: {
             width: "100%",
-            cursor: "auto",
             height: "calc(100% - 35px)",
+            padding: ".3em .4em",
+            backgroundColor: "transparent",
+            font: "unset",
+            fontSize: ".8em",
+            lineHeight: "1.8em",
+            cursor: "auto",
+            "&:focus": {
+                fontSize: "unset",
+                border: "none",
+                outline: "1px dashed gray",
+            },
         },
     });
     const classes = useStyles();
@@ -30,6 +40,7 @@ export default function PostContent(
                         name="content"
                         as="textarea"
                         placeholder="내용을 입력하세요"
+                        className={classes.content}
                         values={values.content}
                         onChange={handleChange}
                         onBlur={() => {
@@ -43,10 +54,7 @@ export default function PostContent(
                         }}
                     />
                 ) : (
-                    <div
-                        className={classes.content}
-                        onClick={() => setEditable(true)}
-                    >
+                    <div onClick={() => setEditable(true)}>
                         {post.content.split("\n").map((line, i) => {
                             return (
                                 <span key={i}>
