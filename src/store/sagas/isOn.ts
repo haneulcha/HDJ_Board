@@ -9,7 +9,6 @@ import {
 import * as actions from "../_type";
 import { getIsOnLS, updateIsOnLS } from "../../utils";
 
-// 보드를 클릭할 때
 function* updateIsOn(action: actions.IReqUpdateIsOnAction) {
     yield call(updateIsOnLS, action.payload.board, action.payload.boardId);
     yield put({
@@ -18,7 +17,6 @@ function* updateIsOn(action: actions.IReqUpdateIsOnAction) {
     });
 }
 
-// 보드를 생성하거나 삭제, LS에 가져올 때
 function* getIsOn() {
     const isOn: actions.IIsOnState = yield call(getIsOnLS);
     yield put({

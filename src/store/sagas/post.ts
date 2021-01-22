@@ -55,12 +55,10 @@ function* deletePost(action: actions.IReqDeletePostAction) {
 }
 
 function* watchPost() {
-    // yield takeEvery(actions.REQ_GET_POSTS, getPosts); // 최초 접속시 불러오기
-    yield takeEvery(actions.GET_ISON, getPosts); // isOn이 변경될 때마다 새로 포스트 불러오기
+    yield takeEvery(actions.GET_ISON, getPosts);
     yield takeEvery(actions.REQ_CREATE_POST, createPost);
     yield takeEvery(actions.REQ_UPDATE_POST, updatePost);
     yield takeEvery(actions.REQ_DELETE_POST, deletePost);
-    // yield takeEvery(actions._ISON, getPosts);
 }
 
 export default function* PostSaga(): Generator<StrictEffect, void, unknown> {

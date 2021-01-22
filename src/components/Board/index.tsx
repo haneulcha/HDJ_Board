@@ -41,14 +41,13 @@ function Board(): ReactElement {
         },
     });
 
-    // create a new post when pressing shortcut
     useHotkeys("ctrl+alt+n, command+alt+n", (event: KeyboardEvent) => {
         event.preventDefault();
         const newPost = {
             title: "",
             content: "",
             position: { x: 200, y: 200 },
-            size: { width: 220, height: 180 },
+            size: { width: 280, height: 220 },
             isOpen: true,
             boardId: isOn.boardId,
             timestamp: getNewTimeStamp(),
@@ -57,7 +56,6 @@ function Board(): ReactElement {
         dispatch(reqCreatePost(newPost));
     });
 
-    // create a new post when double-clicking the board
     function handleDoubleclick(e: React.MouseEvent): void {
         e.preventDefault();
         const elRect = boardRef.current?.getBoundingClientRect();
@@ -69,7 +67,7 @@ function Board(): ReactElement {
                 title: "",
                 content: "",
                 position: { x: relX, y: relY },
-                size: { width: 220, height: 180 },
+                size: { width: 320, height: 280 },
                 isOpen: true,
                 boardId: isOn.boardId,
                 timestamp: getNewTimeStamp(),

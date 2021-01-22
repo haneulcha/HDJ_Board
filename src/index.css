@@ -15,3 +15,24 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
+
+.App {
+    height: 100vh;
+    display: flex;
+}
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+form,
+textarea {
+    width: 100%;
+    height: 100%;
+}

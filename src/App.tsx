@@ -1,6 +1,5 @@
 import React, { ReactElement, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import "./App.css";
 import Board from "./components/Board";
 import BoardList from "./components/BoardList";
 import { reqGetBoardList } from "./store/_action/board";
