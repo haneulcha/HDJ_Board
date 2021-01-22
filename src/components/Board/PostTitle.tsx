@@ -2,11 +2,9 @@ import React, { ReactElement, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Field, FormikProps } from "formik";
 import { makeStyles } from "@material-ui/core/styles";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import CloseIcon from "@material-ui/icons/Close";
 import { PostProps, FormValues, firstEditProps } from ".";
-import { reqUpdatePost, reqDeletePost } from "../../store/_action/post";
+import { reqUpdatePost } from "../../store/_action/post";
+import { PostTitleButtons } from "./PostTitleButtons";
 
 export default function PostTitle(
     props: PostProps & FormikProps<FormValues> & firstEditProps
@@ -27,7 +25,7 @@ export default function PostTitle(
             height: "35px",
         },
         title: {
-            minWidth: "50%",
+            minWidth: "30%",
             height: "100%",
             cursor: "auto",
         },
@@ -66,46 +64,7 @@ export default function PostTitle(
                     {title}
                 </div>
             )}
-            <div className={classes.btns}>
-                {post.isOpen ? (
-                    <ExpandLessIcon
-                        onClick={() => {
-                            dispatch(
-                                reqUpdatePost({
-                                    ...post,
-                                    isOpen: false,
-                                })
-                            );
-                        }}
-                    />
-                ) : (
-                    <ExpandMoreIcon
-                        onClick={() => {
-                            dispatch(
-                                reqUpdatePost({
-                                    ...post,
-                                    isOpen: true,
-                                })
-                            );
-                        }}
-                    />
-                )}
-
-                <CloseIcon
-                    onClick={() => {
-                        if (post.content) {
-                            if (window.confirm("정말 삭제하시겠습니까?")) {
-                                dispatch(
-                                    reqDeletePost(post.boardId, post.timestamp)
-                                );
-                            }
-                        } else
-                            dispatch(
-                                reqDeletePost(post.boardId, post.timestamp)
-                            );
-                    }}
-                />
-            </div>
+            <PostTitleButtons post={post} />
         </div>
     );
 }
